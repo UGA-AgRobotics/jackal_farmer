@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="use_piksi_spp" default="false"/>
+  <arg name="use_piksi_rtk" default="false"/>
+
+<!-- navsat_transform Clearpath GPS -->
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_cp_gps" 
+  respawn="true" clear_params="true">
+    <rosparam file="$(find gps_fusion)/config/cp_gps/navsat_transform.yaml" command="load" />
+
+    <remap from="/gps/fix" to="/navsat/fix"/>
+    <remap from="/odometry/gps" to="/odometry/cp_gps"/>
+    <remap from="/gps/filtered" to="/gps/filtered/cp_gps"/>
+  </node>
+
+<!-- navsat_transform Piksi SPP GPS -->
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_piksi_spp" 
+  respawn="true" clear_params="true">
+    <rosparam file="$(find gps_fusion)/config/piksi_spp/navsat_transform.yaml" command="load" />
+
+    <remap from="/gps/fix" to="/piksi/spp_fix"/>
+    <remap from="/odometry/gps" to="/odometry/piksi_spp"/>
+    <remap from="/gps/filtered" to="/gps/filtered/piksi_spp"/>
+  </node>
+
+<!-- navsat_transform Piksi RTK GPS -->
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_piksi_rtk" 
+  respawn="true" clear_params="true">
+    <rosparam file="$(find gps_fusion)/config/piksi_rtk/navsat_transform.yaml" command="load" />
+
+    <remap from="/gps/fix" to="/piksi/rtk_fix"/>
+    <remap from="/odometry/gps" to="/odometry/piksi_rtk"/>
+    <remap from="/gps/filtered" to="/gps/filtered/piksi_rtk"/>
+  </node>
+
+<!-- Fused from Clearpath GPS -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_cp_gps" clear_params="true">
+    <rosparam file="$(find gps_fusion)/config/cp_gps/ekf_localization.yaml" command="load" />
+
+    <remap from="/odometry/filtered" to="/odometry/filtered/cp_gps"/>
+  </node>
+
+<!-- Fused from Piksi SSP GPS -->
+  <node if="$(arg use_piksi_spp)" pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_piksi_spp" clear_params="true">
+    <rosparam file="$(find gps_fusion)/config/piksi_spp/ekf_localization.yaml" command="load" />
+
+    <remap from="/odometry/filtered" to="/odometry/filtered/piksi_spp"/>
+  </node>
+
+<!-- Fused from Piksi RTK GPS -->
+  <node if="$(arg use_piksi_rtk)" pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_piksi_rtk" clear_params="true">
+    <rosparam file="$(find gps_fusion)/config/piksi_rtk/ekf_localization.yaml" command="load" />
+
+    <remap from="/odometry/filtered" to="/odometry/filtered/piksi_rtk"/>
+  </node>
+
+</launch>

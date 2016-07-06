@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+    <param name="video_device" value="/dev/video0" />
+    <param name="image_width" value="640" />
+    <param name="image_height" value="480" />
+    <param name="pixel_format" value="yuyv" />
+    <param name="camera_frame_id" value="usb_cam" />
+    <param name="io_method" value="mmap"/>
+    <param name="framerate" value="1"/>
+  </node>
+  <node name="stink_reader" pkg="stink_read" type="stink_reader.py"/>
+  <node pkg="rosbag" type="record" name="rosbag_log"
+    args="-o /home/administrator/bags/field_test_1
+    --split --duration=15m 
+    /bluetooth_teleop/joy
+    /cmd_drive
+    /cmd_vel
+    /bug_detect
+    /diagnostics
+    /diagnostics_agg
+    /diagnostics_agg/bond
+    /diagnostics_toplevel_state
+    /feedback
+    /gps/fix
+    /gps/rtkfix
+    /gps/time
+    /imu/data
+    /imu/data_raw
+    /imu/mag
+    /imu/magnetic_field
+    /imu_filter/parameter_descriptions
+    /imu_filter/parameter_updates
+    /jackal_velocity_controller/cmd_vel
+    /jackal_velocity_controller/odom
+    /joint_states
+    /navsat/fix
+    /navsat/nmea_sentence
+    /navsat/time_reference
+    /navsat/vel
+    /odometry/filtered
+    /rosout
+    /rosout_agg
+    /scan
+    /set_pose
+    /status
+    /tf
+    /tf_static
+    /twist_marker_server/feedback
+    /twist_marker_server/update
+    /twist_marker_server/update_full
+    /urg_node/parameter_descriptions
+    /urg_node/parameter_updates
+    /usb_cam/camera_info
+    /usb_cam/image_raw/compressed
+    /usb_cam/image_raw/compressed/parameter_descriptions
+    /usb_cam/image_raw/compressed/parameter_updates
+    /wifi_connected
+    "/>
+</launch>

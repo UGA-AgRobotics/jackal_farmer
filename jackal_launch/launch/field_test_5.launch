@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="stink_sensor" default="true"/>
+  <arg name="record" default="true"/>
+  <arg name="debug" default="false"/>
+
+  <include file="$(find gps_fusion)/launch/gps_fusion.launch"/>
+
+  <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+    <param name="video_device" value="/dev/video0" />
+    <param name="image_width" value="640" />
+    <param name="image_height" value="480" />
+    <param name="pixel_format" value="yuyv" />
+    <param name="camera_frame_id" value="front_mount" />
+    <param name="io_method" value="mmap"/>
+    <param name="framerate" value="1"/>
+  </node>
+
+  <node type="piksi_driver.py" pkg="piksi_ros" name="piksi" output="screen">
+    <param name="frame_id" value="piksi_link"/>
+    <param name="child_frame_id" value="base_link"/>
+    <param name="publish_observations" value="true"/>
+    <param name="publish_ephemeris" value="true"/>
+    <param if="$(arg debug)" name="debug" value="true"/>
+  </node>
+
+  <node if="$(arg stink_sensor)" name="stink_reader" pkg="stink_read" type="stink_reader.py" output="screen"/>
+
+  <node if="$(arg record)" pkg="rosbag" type="record" name="rosbag_log"
+    args="-o /home/administrator/bags/field_test_5
+    --split --duration=15m 
+    /bluetooth_teleop/joy
+    /cmd_drive
+    /cmd_vel
+    /bug_detect
+    /diagnostics
+    /diagnostics_agg
+    /diagnostics_agg/bond
+    /diagnostics_toplevel_state
+    /feedback
+    /gps/filtered/cp_gps
+    /gps/filtered/piksi_rtk
+    /gps/filtered/piksi_spp
+    /piksi/ephemeris
+    /piksi/fix
+    /piksi/odom
+    /piksi/observations
+    /piksi/parameter_descriptions
+    /piksi/parameter_updates
+    /piksi/rtk_fix
+    /piksi/spp_fix
+    /piksi/time
+    /imu/data
+    /imu/data_raw
+    /imu/mag
+    /imu/magnetic_field
+    /imu_filter/parameter_descriptions
+    /imu_filter/parameter_updates
+    /jackal_velocity_controller/cmd_vel
+    /jackal_velocity_controller/odom
+    /joint_states
+    /navsat/fix
+    /navsat/nmea_sentence
+    /navsat/time_reference
+    /navsat/vel
+    /odometry/cp_gps
+    /odometry/filtered
+    /odometry/filtered/cp_gps
+    /odometry/filtered/piksi_rtk
+    /odometry/filtered/piksi_spp
+    /odometry/piksi_rtk
+    /odometry/piksi_spp
+    /rosout
+    /rosout_agg
+    /scan
+    /set_pose
+    /status
+    /tf
+    /tf_static
+    /twist_marker_server/feedback
+    /twist_marker_server/update
+    /twist_marker_server/update_full
+    /urg_node/parameter_descriptions
+    /urg_node/parameter_updates
+    /usb_cam/camera_info
+    /usb_cam/image_raw/compressed
+    /usb_cam/image_raw/compressed/parameter_descriptions
+    /usb_cam/image_raw/compressed/parameter_updates
+    /wifi_connected
+    "/>
+</launch>
