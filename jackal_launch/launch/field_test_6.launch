@@ -6,6 +6,7 @@
   <arg name="debug" default="false"/>
 
   <include file="$(find gps_fusion)/launch/gps_fusion.launch"/>
+  <include file="$(find laser_filtering)/launch/laser_filtering.launch"/>
 
   <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
     <param name="video_device" value="/dev/video0" />
@@ -46,6 +47,9 @@
     /navsat/nmea_sentence
     /navsat/time_reference
     /navsat/vel
+    /reach/fix
+    /reach/vel
+    /reach/time_reference
     /odometry/cp_gps
     /odometry/filtered
     /odometry/filtered/cp_gps
@@ -54,6 +58,8 @@
     /rosout
     /rosout_agg
     /scan
+    /scan_filtered
+    /cloud_filtered
     /set_pose
     /status
     /tf

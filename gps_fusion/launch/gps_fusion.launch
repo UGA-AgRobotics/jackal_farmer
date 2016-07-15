@@ -4,7 +4,7 @@
   <arg name="use_reach" default="false"/>
 
 <!-- Reach nmea driver -->
-  <node pkg="nmea_navsat_driver" type="nmea_serial_drive" name="reach_nmea_driver" respawn="true"/>
+  <node pkg="nmea_navsat_driver" type="nmea_serial_drive" name="reach_nmea_driver" respawn="true">
     <param name="port" value="/dev/ttyUSB0"/>
     <param name="baud" value="57600"/>
     <param name="frame_id" value="reach_link"/>
@@ -29,7 +29,7 @@
   respawn="true" clear_params="true">
     <rosparam file="$(find gps_fusion)/config/reach/navsat_transform.yaml" command="load" />
 
-    <remap from="/gps/fix" to="reach/fix"/>
+    <remap from="/gps/fix" to="/reach/fix"/>
     <remap from="/odometry/gps" to="/odometry/reach"/>
     <remap from="/gps/filtered" to="/gps/filtered/reach"/>    
   </node>
