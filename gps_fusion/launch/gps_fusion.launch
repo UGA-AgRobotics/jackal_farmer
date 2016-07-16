@@ -1,37 +1,47 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="use_reach" default="false"/>
+  <arg name="bag_run" default="false"/>
+  <param name="use_sim_time" value="$(arg bag_run)"/>
 
-  <arg name="use_cp" default="true" unless="$(arg use_reach)"/>
+  <arg name="use_reach" default="true"/>
+  <arg name="use_cp" default="false"/>
+  <arg name="use_navsat" default="false"/>
 
 <!-- Reach nmea driver -->
-  <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="reach_nmea_driver" respawn="true">
+  <node if="$(arg use_navsat)" pkg="nmea_navsat_driver" type="nmea_serial_driver" name="reach_nmea_driver" respawn="true">
     <param name="port" value="/dev/ttyUSB0"/>
     <param name="baud" value="57600"/>
     <param name="frame_id" value="reach_link"/>
 
+    <!-- published remap -->
     <remap from="/fix" to="/reach/fix"/>
     <remap from="/vel" to="/reach/vel"/>
     <remap from="/time_reference" to="/reach/time_reference"/>
   </node>
 
 <!-- navsat_transform Clearpath GPS -->
-  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_cp_gps" 
+  <node if="$(arg use_cp)" pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_cp_gps" 
   respawn="true" clear_params="true">
     <rosparam file="$(find gps_fusion)/config/cp_gps/navsat_transform.yaml" command="load" />
 
+    <!-- subscribed remap -->
     <remap from="/gps/fix" to="/navsat/fix"/>
+
+    <!-- published remap -->
     <remap from="/odometry/gps" to="/odometry/cp_gps"/>
     <remap from="/gps/filtered" to="/gps/filtered/cp_gps"/>
   </node>
 
 <!-- navsat_transform Reach GPS -->
-  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_reach" 
+  <node if="$(arg use_reach)" pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_reach" 
   respawn="true" clear_params="true">
     <rosparam file="$(find gps_fusion)/config/reach/navsat_transform.yaml" command="load" />
 
+    <!-- subscribed remap -->
     <remap from="/gps/fix" to="/reach/fix"/>
+
+    <!-- published remap -->
     <remap from="/odometry/gps" to="/odometry/reach"/>
     <remap from="/gps/filtered" to="/gps/filtered/reach"/>    
   </node>
@@ -40,6 +50,7 @@
   <node if="$(arg use_cp)" pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_cp_gps" clear_params="true">
     <rosparam file="$(find gps_fusion)/config/cp_gps/ekf_localization.yaml" command="load" />
 
+    <!-- published remap -->
     <remap from="/odometry/filtered" to="/odometry/filtered/cp_gps"/>
   </node>
 
@@ -47,6 +58,7 @@
   <node if="$(arg use_reach)" pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_reach" clear_params="true">
     <rosparam file="$(find gps_fusion)/config/reach/ekf_localization.yaml" command="load" />
 
+    <!-- published remap -->
     <remap from="/odometry/filtered" to="/odometry/filtered/reach"/>
   </node>
 
