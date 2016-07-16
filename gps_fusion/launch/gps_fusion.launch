@@ -3,6 +3,8 @@
 
   <arg name="use_reach" default="false"/>
 
+  <arg name="use_cp" default="true" unless="$(arg use_reach)"/>
+
 <!-- Reach nmea driver -->
   <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="reach_nmea_driver" respawn="true">
     <param name="port" value="/dev/ttyUSB0"/>
@@ -35,7 +37,7 @@
   </node>
 
 <!-- Fused from Clearpath GPS -->
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_cp_gps" clear_params="true">
+  <node if="$(arg use_cp)" pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_cp_gps" clear_params="true">
     <rosparam file="$(find gps_fusion)/config/cp_gps/ekf_localization.yaml" command="load" />
 
     <remap from="/odometry/filtered" to="/odometry/filtered/cp_gps"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <link name="read_link">
+  <link name="reach_link">
     <!--reach antena-->
     <visual>
       <geometry>
