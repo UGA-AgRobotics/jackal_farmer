@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="stink_sensor" default="true"/>
+  <arg name="stink_sensor" default="false"/>
   <arg name="record" default="true"/>
   <arg name="debug" default="false"/>
 

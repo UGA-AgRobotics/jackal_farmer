@@ -6,10 +6,9 @@
 
   <arg name="use_reach" default="true"/>
   <arg name="use_cp" default="false"/>
-  <arg name="use_navsat" default="false"/>
 
 <!-- Reach nmea driver -->
-  <node if="$(arg use_navsat)" pkg="nmea_navsat_driver" type="nmea_serial_driver" name="reach_nmea_driver" respawn="true">
+  <node if="$(arg use_reach)" pkg="nmea_navsat_driver" type="nmea_serial_driver" name="reach_nmea_driver" respawn="true">
     <param name="port" value="/dev/ttyUSB0"/>
     <param name="baud" value="57600"/>
     <param name="frame_id" value="reach_link"/>
