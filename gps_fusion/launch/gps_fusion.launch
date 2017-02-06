@@ -44,6 +44,7 @@
 
     <!-- subscribed remap -->
     <remap from="/gps/fix" to="/reach/fix"/>
+    <remap from="odometry/filtered" to="/odometry/filtered/reach"/>
 
     <!-- published remap -->
     <remap from="/odometry/gps" to="/odometry/reach"/>
