@@ -1,6 +1,0 @@
-[submodule "piksi_ros"]
-	path = piksi_ros
-	url = git@github.com:sonyccd/piksi_ros.git
-[submodule "swiftnav_piksi"]
-	path = swiftnav_piksi
-	url = https://github.com/PaulBouchier/swiftnav_piksi.git
