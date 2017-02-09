@@ -1,5 +1,6 @@
+# changed global_frame to map as map is used by the gps
 global_costmap:
-  global_frame: odom
+  global_frame: map
   robot_base_frame: base_link
   update_frequency: 20
   publish_frequency: 5
