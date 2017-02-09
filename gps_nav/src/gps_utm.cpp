@@ -159,10 +159,10 @@ void gpsCallBack(const sensor_msgs::NavSatFixConstPtr &gps) {
 }
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "Geoposition");
+    ros::init(argc, argv, "gps_utm");
     ros::NodeHandle n;
-    ros::Subscriber gps_sub = n.subscribe("navsat/fix", 10, gpsCallBack);
-    position_pub = n.advertise<geometry_msgs::Point>("global_position", 1);
+    ros::Subscriber gps_sub = n.subscribe("gps_nav/gps", 10, gpsCallBack);
+    position_pub = n.advertise<geometry_msgs::Point>("gps_nav/utm", 1);
     ros::Rate loop_rate(10);
     while (n.ok()) {
         ros::spinOnce();
