@@ -5,6 +5,9 @@
   <arg name="record" default="false"/>
   <arg name="debug" default="false"/>
   <arg name="usb_cam" default="false"/>
+  <arg name="sim" default="true"/>
+
+  <param if="$(arg sim)" name="use_sim_time" value="true"/>
 
   <include file="$(find gps_fusion)/launch/gps_fusion.launch"/>
 
