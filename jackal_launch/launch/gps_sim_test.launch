@@ -5,7 +5,6 @@
   <arg name="record" default="false"/>
   <arg name="debug" default="false"/>
   <arg name="usb_cam" default="false"/>
-  <arg name="sim" default="true"/>
 
   <param name="use_sim_time" value="true"/>
 
