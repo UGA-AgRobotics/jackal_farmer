@@ -4,6 +4,7 @@ import rospy
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
+
 if __name__ == '__main__':
     rospy.init_node('gps_nav')
 
