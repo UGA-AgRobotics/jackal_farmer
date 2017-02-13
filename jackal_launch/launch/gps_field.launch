@@ -6,7 +6,7 @@
   <arg name="debug" default="false"/>
   <arg name="usb_cam" default="true"/>
 
-  <param name="use_sim_time" value="true"/>
+  <param name="use_sim_time" value="false"/>
 
   <include file="$(find gps_fusion)/launch/gps_fusion.launch"/>
   <include file="$(find laser_filtering)/launch/laser_filtering.launch"/>
