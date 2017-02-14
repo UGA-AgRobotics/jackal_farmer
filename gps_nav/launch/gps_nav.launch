@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
 
 <launch>
-    <node name="gpsTOutm" pkg="gps_nav" type="gps_utm" output="screen"/>
+    <node name="gpsTOutm" pkg="gps_nav" type="gps_nav_node" output="screen"/>
 </launch>
