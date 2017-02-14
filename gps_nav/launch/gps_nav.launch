@@ -2,4 +2,6 @@
 
 <launch>
     <node name="gpsTOutm" pkg="gps_nav" type="gps_nav_node" output="screen"/>
+
+    <node name="joy_nav" pkg="gps_nav" type="gps_goal.py" output="screen"/>
 </launch>

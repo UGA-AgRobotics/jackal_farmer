@@ -35,7 +35,7 @@ if __name__ == '__main__':
     # client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
     # client.wait_for_server()
 
-    joy_sub = rospy.Subscriber('bluetooth/joy', Joy, joy_callback)
+    joy_sub = rospy.Subscriber('bluetooth_teleop/joy', Joy, joy_callback)
     gps_put = rospy.Publisher('gps_nav/gps', NavSatFix)
     gps_get = rospy.Subscriber('gps_nav/utm', Point, point_callback)
 
