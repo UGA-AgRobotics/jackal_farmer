@@ -8,7 +8,7 @@ from geometry_msgs.msg import Point
 
 
 def joy_callback(msg):
-    if msg.data.buttons[12] == 1:
+    if msg.buttons[12] == 1:
         gps_goal = NavSatFix
         gps_goal.latitude = 33.726526
         gps_goal.longitude = -83.299984
@@ -25,9 +25,9 @@ def point_callback(msg):
     # goal.target_pose.pose.orientation.y = 0.0
     # goal.target_pose.pose.orientation.z = 0.0
     # goal.target_pose.pose.orientation.w = 1.0
-    print(msg.data.x)
-    print(msg.data.y)
-    print(msg.data.z)
+    print(msg.x)
+    print(msg.y)
+    print(msg.z)
 
 if __name__ == '__main__':
     rospy.init_node('gps_nav')
