@@ -25,6 +25,7 @@ def point_callback(msg):
     # goal.target_pose.pose.orientation.y = 0.0
     # goal.target_pose.pose.orientation.z = 0.0
     # goal.target_pose.pose.orientation.w = 1.0
+    print("test")
     print(msg.x)
     print(msg.y)
     print(msg.z)
