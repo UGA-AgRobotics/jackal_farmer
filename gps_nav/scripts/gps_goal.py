@@ -13,28 +13,29 @@ def joy_callback(msg):
         gps_goal.latitude = 33.726526
         gps_goal.longitude = -83.299984
         gps_put.publish(gps_goal)
+    if msg.buttons[14] == 1:
+        client.cancel_all_goals()
 
 
 def point_callback(msg):
-    # goal = MoveBaseGoal()
-    # goal.target_pose.header.frame_id = 'utm'
-    # goal.target_pose.pose.position.x = msg.data.x
-    # goal.target_pose.pose.position.y = msg.data.y
-    # goal.target_pose.pose.position.z = msg.data.z
-    # goal.target_pose.pose.orientation.x = 0.0
-    # goal.target_pose.pose.orientation.y = 0.0
-    # goal.target_pose.pose.orientation.z = 0.0
-    # goal.target_pose.pose.orientation.w = 1.0
-    print("test")
-    print(msg.x)
-    print(msg.y)
-    print(msg.z)
+    goal = MoveBaseGoal()
+    goal.target_pose.header.frame_id = 'utm'
+    goal.target_pose.pose.position.x = msg.x
+    goal.target_pose.pose.position.y = msg.y
+    goal.target_pose.pose.position.z = msg.z
+    goal.target_pose.pose.orientation.x = 0.0
+    goal.target_pose.pose.orientation.y = 0.0
+    goal.target_pose.pose.orientation.z = 0.0
+    goal.target_pose.pose.orientation.w = 1.0
+    client.cancel_all_goals()
+    client.send_goal(goal)
+
 
 if __name__ == '__main__':
     rospy.init_node('gps_nav')
 
-    # client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
-    # client.wait_for_server()
+    client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
+    client.wait_for_server()
 
     joy_sub = rospy.Subscriber('bluetooth_teleop/joy', Joy, joy_callback)
     gps_put = rospy.Publisher('gps_nav/gps', NavSatFix, queue_size=10)
