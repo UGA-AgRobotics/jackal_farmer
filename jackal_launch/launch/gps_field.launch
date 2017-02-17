@@ -2,7 +2,7 @@
 <launch>
 
   <arg name="stink_sensor" default="false"/>
-  <arg name="record" default="false"/>
+  <arg name="record" default="true"/>
   <arg name="debug" default="false"/>
   <arg name="usb_cam" default="true"/>
 
@@ -24,7 +24,7 @@
   <node if="$(arg stink_sensor)" name="stink_reader" pkg="stink_read" type="stink_reader.py" output="screen"/>
 
   <node if="$(arg record)" pkg="rosbag" type="record" name="rosbag_log"
-    args="-o /home/administrator/bags/field_test_6
+    args="-o /home/administrator/bags/gps_field_test_1
     --split --duration=15m 
     /bluetooth_teleop/joy
     /cmd_drive
