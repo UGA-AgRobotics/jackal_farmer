@@ -4,8 +4,8 @@
   <arg name="bag_run" default="false"/>
   <param name="use_sim_time" value="$(arg bag_run)"/>
 
-  <arg name="use_reach" default="false"/>
-  <arg name="use_cp" default="true"/>
+  <arg name="use_reach" default="true"/>
+  <arg name="use_cp" default="false"/>
 
 
 <!--
